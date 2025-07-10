@@ -14,14 +14,16 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
-  app:
+  backend:
     build:
-      context: .
+      context: ./backend
     container_name: hero-backend
-    command: npm run start:dev 
+    command: npm run start:dev
     volumes:
-      - .:/app 
+      - ./backend:/app
       - /app/node_modules
+    ports:
+      - "3000:3000"
     depends_on:
       - db
     environment:
@@ -32,8 +34,21 @@ services:
       DB_NAME: heroforce
       JWT_SECRET: devsecret
       JWT_EXPIRES: 3600s
+
+  frontend:
+    build:
+      context: ./frontend
+    container_name: hero-frontend
+    command: npm run dev
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
     ports:
-      - "3000:3000"
+      - "3001:3000"
+    depends_on:
+      - backend
+    environment:
+      NEXT_PUBLIC_API_URL: http://localhost:3000
 
 volumes:
   postgres_data:

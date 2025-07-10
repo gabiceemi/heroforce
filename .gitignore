@@ -1,56 +1,46 @@
-# compiled output
-/dist
-/node_modules
-/build
-
-# Logs
-logs
+# === GLOBAL ===
+.DS_Store
+.env
+.env.*.local
 *.log
+*.lock
+
+# === NODE ===
+node_modules/
 npm-debug.log*
-pnpm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-lerna-debug.log*
+pnpm-debug.log*
 
-# OS
-.DS_Store
+# === DIST ===
+dist/
+build/
 
-# Tests
-/coverage
-/.nyc_output
+# === TYPES ===
+*.tsbuildinfo
 
-# IDEs and editors
-/.idea
-.project
-.classpath
-.c9/
-*.launch
-.settings/
-*.sublime-workspace
+# === BACKEND ===
+/backend/node_modules/
+/backend/dist/
+/backend/.env
+/backend/*.local
 
-# IDE - VSCode
-.vscode/*
-!.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/launch.json
-!.vscode/extensions.json
+# === FRONTEND ===
+/frontend/node_modules/
+/frontend/.next/
+/frontend/out/
+/frontend/.env
+/frontend/.env.local
+/frontend/*.local
 
-# dotenv environment variable files
-.env
-.env.development.local
-.env.test.local
-.env.production.local
-.env.local
+# === DOCKER ===
+*.local
+docker-compose.override.yml
 
-# temp directory
-.temp
-.tmp
+# === TEST ===
+coverage/
+.jest/
+jest-coverage/
 
-# Runtime data
-pids
-*.pid
-*.seed
-*.pid.lock
-
-# Diagnostic reports (https://nodejs.org/api/report.html)
-report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
+# === OS ===
+Thumbs.db
