@@ -82,6 +82,23 @@ docker-compose up --build
 
 ---
 
+### 📘 Documentação Swagger
+
+A API possui uma interface interativa de documentação e testes via Swagger:
+
+- 🧠 **Swagger (API Docs)**: [http://localhost:3000/api](http://localhost:3000/api)
+
+Essa documentação permite:
+
+- Visualizar todos os endpoints disponíveis;
+- Testar requisições diretamente pelo navegador;
+- Ver exemplos de payloads e respostas;
+- Consultar detalhes de validação e parâmetros esperados.
+
+> 🔐 **Atenção**: Endpoints protegidos exigem autenticação via token JWT no botão **"Authorize"** no topo direito da interface.
+
+---
+
 ### ⛳ Acesso rápido
 
 - 🧠 Swagger/API: http://localhost:3000  
