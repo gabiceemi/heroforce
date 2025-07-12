@@ -69,7 +69,7 @@ Este projeto utiliza **Docker** e **Docker Compose** para orquestrar os containe
 No diretório raiz do projeto (onde está o arquivo `docker-compose.yml`), execute o comando abaixo:
 
 ```bash
-docker-compose up --build
+docker compose up --build
 ```
 
 ---
@@ -122,5 +122,5 @@ Senha: postgres
 Para parar tudo, execute:
 
 ```bash
-docker-compose down
+docker compose down
 ```
