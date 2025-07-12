@@ -1,7 +1,10 @@
-import "./globals.css";
+import "../styles/globals.css";
 
+import { AuthProvider } from "@/contexts/AuthContext";
 import { Bangers } from "next/font/google";
 import type { Metadata } from "next";
+import { ProjectProvider } from "@/contexts/ProjectContext";
+import { Toaster } from "react-hot-toast";
 
 const bangers = Bangers({
   subsets: ["latin"],
@@ -22,7 +25,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${bangers.variable} font-hero`}>
-        {children}
+        <AuthProvider>
+          <ProjectProvider>
+            {children}
+          </ProjectProvider>
+        </AuthProvider>
+        <Toaster position="top-right" toastOptions={{ duration: 3000 }} />
       </body>
     </html>
   );

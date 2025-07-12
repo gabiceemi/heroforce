@@ -9,14 +9,14 @@ export class User {
 
   @Column()
   name: string;
-
+e
   @Column({ unique: true })
   email: string;
 
   @Column()
   password: string;
 
-  @Column()
+  @Column({ nullable: true })
   character: string;
 
   @OneToMany(() => Project, (project) => project.responsible)

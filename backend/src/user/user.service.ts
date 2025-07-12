@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from './user.entity';
 import * as bcrypt from 'bcrypt';
-import { CreateUserDto } from './dto/create-user.dto';
+import { CreateUserDto } from '../auth/dto/create-user.dto';
 
 @Injectable()
 export class UserService {
@@ -28,4 +28,14 @@ export class UserService {
     findOneByEmail(email: string) {
         return this.userRepo.findOne({ where: { email } });
     }
+
+    async findOneById(id: number) {
+        return this.userRepo.findOne({ where: { id }, relations: ['projects'] });
+    }
+
+    async updateCharacter(id: number, character: string) {
+        await this.userRepo.update(id, { character });
+        return this.findOneById(id);
+    }
+
 }

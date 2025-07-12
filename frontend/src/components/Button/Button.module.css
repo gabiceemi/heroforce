@@ -1,0 +1,67 @@
+.button {
+  min-width: 300px;
+  padding: 1rem 2rem;
+  border-radius: var(--radius);
+  font-weight: bold;
+  font-family: var(--font-hero);
+  cursor: pointer;
+  transition: transform 0.2s ease, background 0.2s ease;
+  border: none;
+}
+
+.primary {
+  background: var(--primary);
+  color: white;
+}
+
+.primary:hover {
+  background: var(--secondary);
+  transform: scale(1.03);
+}
+
+.secondary {
+  background: transparent;
+  color: var(--primary);
+  border: 2px solid var(--primary);
+}
+
+.secondary:hover {
+  background: rgba(230, 36, 41, 0.1);
+  transform: scale(1.03);
+}
+
+.danger {
+  background: #b00020;
+  color: white;
+}
+
+.danger:hover {
+  background: #8c001a;
+  transform: scale(1.03);
+}
+
+.button:disabled {
+  background: #aaa;
+  color: #eee;
+  cursor: not-allowed;
+  transform: none;
+  opacity: 0.7;
+}
+
+.icon {
+  background: transparent;
+  color: var(--foreground);
+  border: none;
+  padding: 0.5rem;
+  border-radius: 8px;
+  transition: background 0.2s ease;
+}
+
+.icon:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.icon:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
