@@ -29,4 +29,9 @@ export const heroes = [
     name: 'Capitão América',
     image: '/heroes/captainamerica.png',
   },
+  {
+    id: 'professor',
+    name: 'Professor Xavier',
+    image: '/heroes/professor.png',
+  },
 ];

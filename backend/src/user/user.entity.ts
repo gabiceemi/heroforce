@@ -1,7 +1,7 @@
 import { ApiHideProperty, ApiProperty } from '@nestjs/swagger';
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
-import { Project } from 'src/project/project.entity';
+import { Project } from '../project/project.entity';
 
 @Entity()
 export class User {
