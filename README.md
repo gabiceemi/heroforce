@@ -14,15 +14,12 @@
 
 **HeroForce** é uma aplicação **web fullstack** que simula um sistema de gestão e acompanhamento de projetos para **heróis e administradores**.
 
-Criado como projeto autoral para estudar:
-
 - Autenticação JWT  
 - API RESTful documentada com Swagger  
 - Banco de dados relacional com PostgreSQL  
 - Backend escalável com NestJS  
-- Frontend desacoplado com Next.js ou React  
+- Frontend desacoplado com Next.js  
 - Testes unitários e E2E com Jest  
-- Deploy em ambientes cloud  
 
 ---
 
@@ -41,7 +38,7 @@ Criado como projeto autoral para estudar:
 
 ## 🗃️ Funcionalidades
 
-✅ Cadastro de heróis com escolha de personagem (Marvel/DC/Outros)  
+✅ Cadastro de heróis com escolha de personagem
 ✅ Login seguro com JWT  
 ✅ CRUD de projetos com metas (agilidade, encantamento, eficiência, excelência, transparência, ambição)  
 ✅ Painel de acompanhamento de progresso dos projetos  
@@ -96,6 +93,17 @@ Essa documentação permite:
 - Consultar detalhes de validação e parâmetros esperados.
 
 > 🔐 **Atenção**: Endpoints protegidos exigem autenticação via token JWT no botão **"Authorize"** no topo direito da interface.
+
+---
+
+### 🌱 Seed de dados iniciais
+
+Para popular o banco com um usuário e um projeto já prontos (Gabriel como Professor Xavier), execute os comandos abaixo:
+
+```bash
+docker exec -it hero-backend npx ts-node src/seeds/create-user.seed.ts
+docker exec -it hero-backend npx ts-node src/seeds/create-project.seed.ts
+```
 
 ---
 
