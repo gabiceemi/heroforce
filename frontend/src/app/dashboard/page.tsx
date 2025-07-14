@@ -9,15 +9,20 @@ import { ProjectForm } from '@/components/Project/ProjectForm';
 import { ProjectList } from '@/components/Project/ProjectList';
 import { redirect } from 'next/navigation';
 import styles from './Dashboard.module.css';
-import toast from 'react-hot-toast';
 import { useAuth } from '@/contexts/AuthContext';
 import { useProjects } from '@/contexts/ProjectContext';
 
 export default function Dashboard() {
   const { user, isAuthenticated, logout } = useAuth();
-  const { projects, addProject } = useProjects();
+  const {
+    projects,
+    isModalOpen,
+    openModal,
+    closeModal,
+    setProjectToEdit,
+  } = useProjects();
+
   const [filters, setFilters] = useState({ status: '', hero: '' });
-  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     if (!isAuthenticated) {
@@ -37,6 +42,11 @@ export default function Dashboard() {
 
   if (!isAuthenticated || (user && !user.character)) return null;
 
+  function handleNewProject() {
+    setProjectToEdit(null); // limpa o estado anterior de edição
+    openModal();
+  }
+
   return (
     <div className={styles.dashboard}>
       <header className={styles.header}>
@@ -49,14 +59,14 @@ export default function Dashboard() {
           <LogOut size={20} />
         </Button>
       </header>
+
       <section className={styles.filters}>
         <ProjectFilters
           status={filters.status}
           hero={filters.hero}
           onChange={setFilters}
         />
-
-        <Button onClick={() => setIsModalOpen(true)}>➕ Novo Projeto</Button>
+        <Button onClick={handleNewProject}>➕ Novo Projeto</Button>
       </section>
 
       <section className={styles.list}>
@@ -69,21 +79,10 @@ export default function Dashboard() {
           <div className={styles.modalContent}>
             <ProjectForm
               footer={
-                <Button onClick={() => setIsModalOpen(false)} variant="secondary">
+                <Button onClick={closeModal} variant="secondary">
                   Cancelar
                 </Button>
               }
-              onSubmit={(form) => {
-                addProject({
-                  name: form.name,
-                  description: form.description,
-                  status: form.status,
-                  goals: form.goals,
-                  responsibleId: user!.id,
-                });
-                setIsModalOpen(false);
-                toast.success('Projeto criado com sucesso!');
-              }}
             />
           </div>
         </div>

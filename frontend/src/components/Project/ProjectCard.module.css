@@ -81,3 +81,20 @@
   border-top: 1px solid #333;
   padding-top: 0.75rem;
 }
+
+.editButton {
+  background: none;
+  border: none;
+  padding: 0.25rem;
+  color: var(--primary);
+  cursor: pointer;
+  transition: color 0.2s ease, transform 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.editButton:hover {
+  color: var(--accent);
+  transform: scale(1.1);
+}

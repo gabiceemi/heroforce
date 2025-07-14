@@ -1,18 +1,34 @@
-import { NewProjectDTO, ProjectStatus } from '@/contexts/ProjectContext';
+'use client';
+
+import {
+  NewProjectDTO,
+  ProjectStatus,
+  useProjects,
+} from '@/contexts/ProjectContext';
+import { useEffect, useState } from 'react';
 
 import { Button } from '../Button/Button';
 import { Input } from '@/components/Input/Input';
 import { Select } from '../Input/Select';
 import { Textarea } from '../Input/Textarea';
 import styles from './ProjectForm.module.css';
-import { useState } from 'react';
+import { useAuth } from '@/contexts/AuthContext';
 
 interface ProjectFormProps {
   footer?: React.ReactNode;
-  onSubmit: (data: Omit<NewProjectDTO, 'responsibleId'>) => void;
 }
 
-export function ProjectForm({ footer, onSubmit }: ProjectFormProps) {
+export function ProjectForm({ footer }: ProjectFormProps) {
+  const { user } = useAuth();
+  const {
+    projectToEdit,
+    addProject,
+    updateProject,
+    closeModal,
+  } = useProjects();
+
+  const isEditing = !!projectToEdit;
+
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [status, setStatus] = useState<ProjectStatus>('pendente');
@@ -27,13 +43,51 @@ export function ProjectForm({ footer, onSubmit }: ProjectFormProps) {
 
   const statusOptions: ProjectStatus[] = ['pendente', 'em andamento', 'concluido'];
 
+  useEffect(() => {
+    if (projectToEdit) {
+      setName(projectToEdit.name);
+      setDescription(projectToEdit.description);
+      setStatus(projectToEdit.status);
+      setGoals(projectToEdit.goals);
+    } else {
+      setName('');
+      setDescription('');
+      setStatus('pendente');
+      setGoals({
+        agilidade: 0,
+        encantamento: 0,
+        eficiencia: 0,
+        excelencia: 0,
+        transparencia: 0,
+        ambicao: 0,
+      });
+    }
+  }, [projectToEdit]);
+
   function handleGoalChange(key: keyof NewProjectDTO['goals'], value: number) {
     setGoals((prev) => ({ ...prev, [key]: value }));
   }
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    onSubmit({ name, description, status, goals });
+
+    if (!user) return;
+
+    const formData: NewProjectDTO = {
+      name,
+      description,
+      status,
+      goals,
+      responsibleId: user.id,
+    };
+
+    if (isEditing && projectToEdit) {
+      updateProject(projectToEdit.id, formData);
+    } else {
+      addProject(formData);
+    }
+
+    closeModal();
   }
 
   return (

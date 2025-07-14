@@ -1,4 +1,4 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 
 import { ApiProperty } from '@nestjs/swagger';
 import { User } from '../user/user.entity';
@@ -45,4 +45,12 @@ export class Project {
   @ManyToOne(() => User, (user) => user.projects)
   @ApiProperty({ type: () => User })
   responsible: User;
+
+  @CreateDateColumn()
+  @ApiProperty({ type: String, description: 'Data de criação do projeto' })
+  createdAt: Date;
+
+  @UpdateDateColumn()
+  @ApiProperty({ type: String, description: 'Data da última atualização do projeto' })
+  updatedAt: Date;
 }

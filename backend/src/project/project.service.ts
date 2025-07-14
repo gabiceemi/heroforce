@@ -4,6 +4,7 @@ import { Project } from './project.entity';
 import { Repository } from 'typeorm';
 import { CreateProjectDto } from './dto/create-project.dto';
 import { User } from '../user/user.entity';
+import { UpdateProjectDto } from './dto/update-project.dto';
 
 @Injectable()
 export class ProjectService {
@@ -33,6 +34,39 @@ export class ProjectService {
     }
 
     async findAll(): Promise<Project[]> {
-        return this.projectRepository.find({ relations: ['responsible'] });
+        return this.projectRepository.find({
+            relations: ['responsible'],
+            order: { updatedAt: 'DESC' },
+        });
+    }
+
+    async update(id: number, data: UpdateProjectDto): Promise<Project> {
+        const project = await this.projectRepository.findOne({
+            where: { id },
+            relations: ['responsible'],
+        });
+
+        if (!project) {
+            throw new Error(`Projeto com id ${id} não encontrado.`);
+        }
+
+        if (data.responsibleId && data.responsibleId !== project.responsible.id) {
+            const newResponsible = await this.userRepository.findOneBy({ id: data.responsibleId });
+
+            if (!newResponsible) {
+                throw new Error(`Usuário com id ${data.responsibleId} não encontrado.`);
+            }
+
+            project.responsible = newResponsible;
+        }
+
+        Object.assign(project, {
+            name: data.name ?? project.name,
+            description: data.description ?? project.description,
+            status: data.status ?? project.status,
+            goals: data.goals ?? project.goals,
+        });
+
+        return this.projectRepository.save(project);
     }
 }

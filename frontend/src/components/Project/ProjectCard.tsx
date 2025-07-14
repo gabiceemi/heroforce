@@ -1,16 +1,33 @@
+import { Project, useProjects } from '@/contexts/ProjectContext';
+
 import { Avatar } from '../Avatar/Avatar';
-import { Project } from '@/contexts/ProjectContext';
+import { Pencil } from 'lucide-react';
 import { Tag } from '../Tag/Tag';
 import styles from './ProjectCard.module.css';
+import { useAuth } from '@/contexts/AuthContext';
 
 export function ProjectCard(project: Project) {
   const { name, description, status, goals, responsible } = project;
+  const { user } = useAuth();
+  const { setProjectToEdit, openModal } = useProjects();
+
+  const isOwner = user?.id === responsible.id;
+
+  function handleEdit() {
+    setProjectToEdit(project);
+    openModal();
+  }
 
   return (
     <div className={styles.card}>
       <div className={styles.header}>
         <h3>{name}</h3>
         <Tag status={status} />
+        {isOwner && (
+          <button className={styles.editButton} onClick={handleEdit}>
+            <Pencil size={18} />
+          </button>
+        )}
       </div>
 
       <p className={styles.goal}>🎯 {description}</p>
